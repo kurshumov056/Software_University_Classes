@@ -1,3 +1,8 @@
+
+from Project.animal import Animal
+from Project.worker import Worker
+ 
+
 class Zoo:
 
     def __init__(self, name: str, budget: int, animal_capacity: int, workers_capacity: int):
@@ -79,3 +84,26 @@ class Zoo:
     def profit(self, amount: int):
         self.__budget += amount
 
+
+    def animals_status(self):
+        result = f'You have {len(self.animals)} animals\n'
+        result += self.__build_animal_str('Lion')
+        result += self.__build_animal_str('Tiger')
+        result += self.__build_animal_str('Cheetah')
+        return result
+
+    def workers_status(self):
+        return f'You have {len(self.workers)} workers'
+
+
+    def __build_animal_str(self, animal_type):
+        filtered = []
+        for animal in self.animals:
+            if animal.__class__.__name__ == animal_type:
+                filtered.append(animal)
+
+        result = f'----- {len(filtered)} {animal_type}s:\n'
+
+        for obj in filtered:
+            result += repr(obj) + '\n'
+        return result
