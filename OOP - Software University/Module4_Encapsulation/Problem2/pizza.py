@@ -1,12 +1,15 @@
+from Project.dough import Dough
+from Project.topping import Topping
+
 
 
 class Pizza:
 
-    def __init__(self, name:str, dough:Dough, toppings_capacity:int, toppings:dict):
+    def __init__(self, name:str, dough:Dough, toppings_capacity:int ):
         self.name = name
         self.dough = dough
         self.toppings_capacity = toppings_capacity
-        self.toppings = toppings
+        self.toppings = dict()
 
 
 
@@ -18,6 +21,7 @@ class Pizza:
     def name(self, value):
         if value == "":
             raise ValueError("The name cannot be an empty string")
+        self.__name = value
 
 
     @property
@@ -26,9 +30,9 @@ class Pizza:
 
     @dough.setter
     def dough(self, value):
-        if value == None:
+        if value is None:
             raise ValueError("You should add dough to the pizza")
-        self.dough = value
+        self.__dough = value
 
 
     @property
@@ -42,11 +46,18 @@ class Pizza:
         self.__toppings_capacity = value
 
 
-    @property
-    def toppings(self):
-        return self.__toppings
 
-    @toppings.setter
-    def toppings(self, value):
-        #FINISH
+    def add_topping(topping: Topping):
+        if len(self.toppings) == self.toppings_capacity:
+            raise ValueError("Not enough space for another topping")
+
+        if topping.topping_type in self.toppings:
+            self.toppings[topping.topping_type] += topping.weight
+
+        else:
+            self.toppings[topping.topping_type] = topping.weight
+
+    def calculate_total_weight(self):
+        return self.dough.weight + sum(self.toppings.values())
+
 
